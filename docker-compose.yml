@@ -1,0 +1,17 @@
+
+services:
+  backend:
+    image: codingcoffee/sentence-transformers
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    entrypoint: uv run fastapi dev --host 0.0.0.0 main.py
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/app
+      - $HOME/.cache/huggingface:/root/.cache/huggingface
+      - $HOME/.cache/uv:/root/.cache/uv
+    devices:
+      - nvidia.com/gpu=all
